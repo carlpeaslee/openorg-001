@@ -1,7 +1,7 @@
 module.exports = {
   up(queryInterface, DataTypes) {
     return queryInterface.createTable(
-      'Tokens', {
+      'token', {
         id: {
           type: DataTypes.INTEGER,
           primaryKey: true,
@@ -18,8 +18,8 @@ module.exports = {
         userId: {
           type: DataTypes.INTEGER,
           references: {
-            model: 'Users',
-            key: 'id'
+            model: 'user',
+            key: 'user_id'
           }
         }
       }
@@ -27,6 +27,6 @@ module.exports = {
   },
 
   down(queryInterface) {
-    return queryInterface.dropTable('Tokens');
+    return queryInterface.dropTable('token');
   }
 };

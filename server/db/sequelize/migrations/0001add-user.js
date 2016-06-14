@@ -1,38 +1,40 @@
 module.exports = {
   up(queryInterface, DataTypes) {
     return queryInterface.createTable(
-      'Users', {
-        id: {
+      'user', {
+        user_id: {
           type: DataTypes.INTEGER,
           primaryKey: true,
           autoIncrement: true
         },
         email: {
           type: DataTypes.STRING,
-          allowNull: false
+          allowNull: false,
+          validate: {
+            isEmail: true
+          }
+        },
+        google: {
+          type: DataTypes.STRING
         },
         password: {
           type: DataTypes.STRING
         },
-        name: {
-          type: DataTypes.STRING,
-          defaultValue: ''
+        first_name: {
+          type: DataTypes.STRING
+        },
+        last_name: {
+          type: DataTypes.STRING
         },
         gender: {
-          type: DataTypes.STRING,
-          defaultValue: ''
+          type: DataTypes.STRING
         },
-        location: {
-          type: DataTypes.STRING,
-          defaultValue: ''
+        date_created: {
+          type: DataTypes.DATE,
+          defaultValue: DataTypes.fn('NOW')
         },
-        website: {
-          type: DataTypes.STRING,
-          defaultValue: ''
-        },
-        picture: {
-          type: DataTypes.STRING,
-          defaultValue: ''
+        last_login: {
+          type: DataTypes.DATE
         },
         resetPasswordToken: {
           type: DataTypes.STRING
@@ -43,10 +45,10 @@ module.exports = {
       }
     ).then(() =>
       queryInterface.addIndex(
-        'Users',
+        'user',
         [DataTypes.fn('lower', DataTypes.col('email'))],
         {
-          indexName: 'users_email',
+          indexName: 'user_email',
           indicesType: 'unique'
         }
       )
@@ -54,6 +56,6 @@ module.exports = {
   },
 
   down(queryInterface) {
-    return queryInterface.dropTable('Users');
+    return queryInterface.dropTable('user');
   }
 };

@@ -1,5 +1,5 @@
 export default (sequelize, DataTypes) => {
-  const Token = sequelize.define('Token', {
+  const Token = sequelize.define('token', {
     kind: {
       type: DataTypes.STRING,
       allowNull: false
@@ -11,8 +11,8 @@ export default (sequelize, DataTypes) => {
     userId: {
       type: DataTypes.INTEGER,
       references: {
-        model: 'Users',
-        key: 'id'
+        model: 'user',
+        key: 'user_id'
       }
     }
   }, {
@@ -21,7 +21,7 @@ export default (sequelize, DataTypes) => {
     classMethods: {
       associate(models) {
         Token.belongsTo(models.User, {
-          foreignKey: 'userId'
+          foreignKey: 'user_id'
         });
       }
     }

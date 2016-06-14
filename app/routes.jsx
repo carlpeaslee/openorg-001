@@ -3,6 +3,9 @@ import { Route, IndexRoute } from 'react-router';
 
 import App from 'containers/App';
 import Vote from 'containers/Vote';
+
+import Newcarl from 'containers/Newcarl';
+
 import About from 'containers/About';
 import LoginOrRegister from 'containers/LoginOrRegister';
 import Dashboard from 'containers/Dashboard';
@@ -36,6 +39,7 @@ export default (store) => {
   return (
     <Route path="/" component={App}>
       <IndexRoute component={Vote} />
+      <Route path="newcarl" component={Newcarl} />
       <Route path="login" component={LoginOrRegister} onEnter={redirectAuth} />
       <Route path="dashboard" component={Dashboard} onEnter={requireAuth} />
       <Route path="about" component={About} />

@@ -1,14 +1,14 @@
 import _ from 'lodash';
 import Models from '../models';
-const Topic = Models.Topic;
+const Org = Models.org;
 const sequelize = Models.sequelize;
 
 /**
- * List
+ * List all orgs
  */
 export function all(req, res) {
-  Topic.findAll().then((topics) => {
-    res.json(topics);
+  Org.findAll().then((orgs) => {
+    res.json(orgs);
   }).catch((err) => {
     console.log(err);
     res.status(500).send('Error in first query');
@@ -16,10 +16,10 @@ export function all(req, res) {
 }
 
 /**
- * Add a Topic
+ * Add an org
  */
 export function add(req, res) {
-  Topic.create(req.body).then(() => {
+  Org.create(req.body).then(() => {
     res.status(200).send('OK');
   }).catch((err) => {
     console.log(err);
@@ -28,41 +28,29 @@ export function add(req, res) {
 }
 
 /**
- * Update a topic
+ * Update an org
  */
 export function update(req, res) {
-  const query = { id: req.params.id };
-  const isIncrement = req.body.isIncrement;
+  const query = { org_id: req.params.id };
   const isFull = req.body.isFull;
   const omitKeys = ['id', '_id', '_v', 'isIncrement', 'isFull'];
   const data = _.omit(req.body, omitKeys);
 
   if (isFull) {
-    Topic.update(data, { where: query }).then(() => {
+    Org.update(data, { where: query }).then(() => {
       res.status(200).send('Updated successfully');
     }).catch((err) => {
       console.log(err);
-      res.status(500).send('We failed to save for some reason');
-    });
-  } else {
-    const sign = isIncrement ? '+' : '-';
-    Topic.update({
-      count: sequelize.literal(`count${sign}1`)
-    }, { where: query }).then(() => {
-      res.status(200).send('Updated successfully');
-    }).catch((err) => {
-      console.log(err);
-      // Not sure if server status is the correct status to return
       res.status(500).send('We failed to save for some reason');
     });
   }
 }
 
 /**
- * Remove a topic
+ * Remove an org
  */
 export function remove(req, res) {
-  Topic.destroy({ where: { id: req.params.id } }).then(() => {
+  Org.destroy({ where: { org_id: req.params.id } }).then(() => {
     res.status(200).send('Removed Successfully');
   }).catch((err) => {
     console.log(err);

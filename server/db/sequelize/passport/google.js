@@ -8,7 +8,6 @@ function attachGoogleAccount(user, profile, accessToken, done) {
   user.google = profile.id;
   user.name = user.name || profile.displayName;
   user.gender = user.gender || profile._json.gender;
-  user.picture = user.picture || profile._json.picture;
 
   return sequelize.transaction((transaction) =>
     user.save({ transaction }).then(() =>
@@ -30,7 +29,6 @@ function createUserWithToken(profile, accessToken, done) {
       google: profile.id,
       name: profile.displayName,
       gender: profile._json.gender,
-      picture: profile._json.picture
     }, { transaction }).then((user) =>
       user.createToken({
         kind: 'google',

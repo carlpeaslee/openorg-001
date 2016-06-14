@@ -16,7 +16,7 @@ function hashPassword(user) {
 /* eslint-enable no-param-reassign */
 
 module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define('User', {
+  const User = sequelize.define('user', {
     email: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -27,7 +27,11 @@ module.exports = (sequelize, DataTypes) => {
     password: {
       type: DataTypes.STRING
     },
-    name: {
+    first_name: {
+      type: DataTypes.STRING,
+      defaultValue: ''
+    },
+    last_name: {
       type: DataTypes.STRING,
       defaultValue: ''
     },
@@ -35,16 +39,12 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       defaultValue: ''
     },
-    location: {
-      type: DataTypes.STRING,
-      defaultValue: ''
+    date_created: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.fn('NOW')
     },
-    website: {
-      type: DataTypes.STRING,
-      defaultValue: ''
-    },
-    picture: {
-      type: DataTypes.STRING,
+    last_login: {
+      last_login: DataTypes.DATE,
       defaultValue: ''
     },
     resetPasswordToken: {
@@ -62,7 +62,7 @@ module.exports = (sequelize, DataTypes) => {
     classMethods: {
       associate(models) {
         User.hasMany(models.Token, {
-          foreignKey: 'userId'
+          foreignKey: 'user_id'
         });
       }
     },
@@ -74,14 +74,12 @@ module.exports = (sequelize, DataTypes) => {
 
       toJSON() {
         return {
-          id: this.id,
+          user_id: this.user_id,
           email: this.email,
           profile: {
-            name: this.name,
-            gender: this.gender,
-            location: this.location,
-            website: this.website,
-            picture: this.picture
+            first_name: this.first_name,
+            last_name: this.last_name,
+            gender: this.gender
           }
         };
       }

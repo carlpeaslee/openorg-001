@@ -1,6 +1,6 @@
 import passport from 'passport';
 import Models from '../models';
-const User = Models.User;
+const User = Models.user;
 
 /**
  * POST /login
